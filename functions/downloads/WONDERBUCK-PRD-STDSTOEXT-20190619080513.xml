@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns0:STO xmlns:ns0="http://STDSTOEXT.SCH.TARGET.SCH_STDSTOEXT_TEST_TARGET">
+	<Client_ID>WONDERBUCK</Client_ID>
+	<Inventory>
+		<SKU_ID>98-1 test buckle</SKU_ID>
+		<EAN/>
+		<QTY>400</QTY>
+		<QTY_Free>400</QTY_Free>
+		<Condition_ID>OK1</Condition_ID>
+		<Family_Group/>
+	</Inventory>
+	<Inventory>
+		<SKU_ID>238-1 test bandje</SKU_ID>
+		<EAN></EAN>
+		<QTY>400</QTY>
+		<QTY_Free>400</QTY_Free>
+		<Condition_ID>OK1</Condition_ID>
+		<Family_Group/>
+	</Inventory>
+	<Inventory>
+		<SKU_ID>240-1 test bandje 2</SKU_ID>
+		<EAN></EAN>
+		<QTY>400</QTY>
+		<QTY_Free>400</QTY_Free>
+		<Condition_ID>OK1</Condition_ID>
+		<Family_Group/>
+	</Inventory>
+</ns0:STO>

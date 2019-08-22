@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<dcsmergedata>
+  <dataheaders>
+    <dataheader transaction="add">
+      <address1/>
+      <address2/>
+      <client_id>WONDERBUCK</client_id>
+      <contact_email>robin@gafas.be</contact_email>
+      <contact_phone>0477888557</contact_phone>
+      <country>BE</country>
+      <customer_id>0</customer_id>
+      <dispatch_method>Shipping</dispatch_method>
+      <freight_terms>flat_rate</freight_terms>
+      <from_site_id>KH</from_site_id>
+      <instructions/>
+      <name> </name>
+      <order_date>20190606122030</order_date>
+      <order_id>296</order_id>
+      <owner_id>01</owner_id>
+      <postcode/>
+      <town/>
+      <datalines>
+        <dataline transaction="add">
+          <client_id>WONDERBUCK</client_id>
+          <condition_id>OK1</condition_id>
+          <line_id>4</line_id>
+          <order_id>296</order_id>
+          <product_currency>EUR</product_currency>
+          <product_price>39.99</product_price>
+          <qty_ordered>2</qty_ordered>
+          <sku_id/>
+        </dataline>
+        <dataline transaction="add">
+          <client_id>WONDERBUCK</client_id>
+          <condition_id>OK1</condition_id>
+          <line_id>5</line_id>
+          <order_id>296</order_id>
+          <product_currency>EUR</product_currency>
+          <product_price>9.99</product_price>
+          <qty_ordered>1</qty_ordered>
+          <sku_id/>
+        </dataline>
+      </datalines>
+    </dataheader>
+  </dataheaders>
+</dcsmergedata>

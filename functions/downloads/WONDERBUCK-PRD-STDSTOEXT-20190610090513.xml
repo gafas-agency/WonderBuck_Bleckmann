@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns0:STO xmlns:ns0="http://STDSTOEXT.SCH.TARGET.SCH_STDSTOEXT_TEST_TARGET">
+	<Client_ID>WONDERBUCK</Client_ID>
+	<Inventory>
+		<SKU_ID>288</SKU_ID>
+		<EAN/>
+		<QTY>400</QTY>
+		<QTY_Free>395</QTY_Free>
+		<Condition_ID>OK1</Condition_ID>
+		<Family_Group/>
+	</Inventory>
+	<Inventory>
+		<SKU_ID>22</SKU_ID>
+		<EAN></EAN>
+		<QTY>60</QTY>
+		<QTY_Free>55</QTY_Free>
+		<Condition_ID>OK1</Condition_ID>
+		<Family_Group/>
+	</Inventory>
+</ns0:STO>
