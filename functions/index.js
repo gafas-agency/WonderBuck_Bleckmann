@@ -8,13 +8,15 @@ var nodemailer = require('nodemailer');
 
 var SFTPClient = require('sftp-promises');
 
+const credentials = require('./credentials.json');
+
 var bleckmannDir = "LIVE"; //change to LIVE or TEST
 
 var sftpConfig = {
-    host: 'sftp.be.bleckmann.com',
-    port: '22',
-    username: 'WONDERBUCKLE',
-    password: '####',
+    host: credentials.sftpBleckmann.host,
+    port: credentials.sftpBleckmann.port,
+    username: credentials.sftpBleckmann.username,
+    password: credentials.sftpBleckmann.password,
     readyTimeout: 99999
 };
 
@@ -31,13 +33,13 @@ var options = {
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'wonderbuckle.bleckmann@gmail.com',
-      pass: '####'
+      user: credentials.backupMail.user,
+      pass: credentials.backupMail.pass
     }
 });
   
 var mailOptions = {
-    from: 'wonderbuckle.bleckmann@gmail.com',
+    from: credentials.backupMail.user,
     to: 'robin@gafas.be',
     subject: 'Connection with Bleckmann failed',
     text: ''
@@ -46,9 +48,9 @@ var mailOptions = {
 const app = express();
 
 var WooCommerce = new WooCommerceAPI({
-    url: 'https://wonderbuckle.com',
-    consumerKey: 'CK_KEY',
-    consumerSecret: 'CS_KEY',
+    url: credentials.wooCommerce.url,
+    consumerKey: credentials.wooCommerce.ck,
+    consumerSecret: credentials.wooCommerce.cs,
     wpAPI: true,
     version: 'wc/v3'
 });
