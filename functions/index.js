@@ -106,34 +106,45 @@ const updateOrderDataWC = (xml) => {
 
 const updateStockWC = (xml) =>{
     var json = parser.toJson(xml, options);
+    console.log(json['STO']);
     var updateData = {
         create: [],
         update: [],
         delete: []
     }
     json['STO'].Inventory.forEach(inventory => {
-        var productId = inventory.SKU_ID.substring(0, inventory.SKU_ID.indexOf('-'));
-        var singleProduct;
-        if(parseInt(inventory.QTY_Free) > 5 ){
-            singleProduct = {
-                id: productId,
-                stock_quantity: parseInt(inventory.QTY_Free),
-                stock_status: "instock"
-            };
-        }else{
-            singleProduct = {
-                id: productId,
-                stock_quantity: 0,
-                stock_status: "outofstock"
-            };
+        var product = createSingleProductUpdate(inventory, inventory.SKU_ID.substring(0, inventory.SKU_ID.indexOf('-')));
+        updateData.update.push(product);
+
+        if(inventory.Family_Group !== "" && inventory.Family_Group !== null && Object.entries(inventory.Family_Group).length !== 0 && inventory.Family_Group.constructor !== Object){
+            var duplicateProduct = createSingleProductUpdate(inventory, inventory.Family_Group);
+            console.log("duplicated product");
+            console.log(duplicateProduct);
+            updateData.update.push(duplicateProduct);
         }
-        //console.log(singleProduct);
-        updateData.update.push(singleProduct);
         
     });
     console.log(updateData);
     putStockToWC(updateData);
     //putStockToWC(productId, inventory.QTY_Free);
+}
+
+const createSingleProductUpdate = (inventoryItem, id) => {
+    var singleProduct;
+    if(parseInt(inventoryItem.QTY_Free) > 5 ){
+        singleProduct = {
+            id: id,
+            stock_quantity: parseInt(inventoryItem.QTY_Free),
+            stock_status: "instock"
+        };
+    }else{
+        singleProduct = {
+            id: id,
+            stock_quantity: 0,
+            stock_status: "outofstock"
+        };
+    }
+    return singleProduct;
 }
 
 const putStockToWC = (/*sku, qty*/data) =>{
