@@ -2,29 +2,28 @@ var i;
 var keys;
 var len;
 
+var crypto = require('crypto');
 var eddsaSupported = (function() {
-  var crypto = require('crypto');
   if (typeof crypto.sign === 'function'
       && typeof crypto.verify === 'function') {
-    var sslVer = /^(\d+)\.(\d+)\.(\d+)/.exec(process.versions.openssl);
-    if (sslVer) {
-      var major = +sslVer[1];
-      if (major > 1)
-        return true;
-      if (major === 1) {
-        var minor = +sslVer[2];
-        if (minor > 1)
-          return true;
-        if (minor === 1) {
-          var patch = +sslVer[3];
-          return (patch >= 1);
-        }
-      }
-    }
+    var key = '-----BEGIN PRIVATE KEY-----\r\nMC4CAQAwBQYDK2VwBCIEIHKj+sVa9WcD'
+              + '/q2DJUJaf43Kptc8xYuUQA4bOFj9vC8T\r\n-----END PRIVATE KEY-----';
+    var data = Buffer.from('a');
+    var sig;
+    var verified;
+    try {
+      sig = crypto.sign(null, data, key);
+      verified = crypto.verify(null, data, key, sig);
+    } catch (ex) {}
+    return (Buffer.isBuffer(sig) && sig.length === 64 && verified === true);
   }
 
   return false;
 })();
+
+var curve25519Supported = (typeof crypto.diffieHellman === 'function'
+                           && typeof crypto.generateKeyPairSync === 'function'
+                           && typeof crypto.createPublicKey === 'function');
 
 var MESSAGE = exports.MESSAGE = {
   // Transport layer protocol -- generic (1-19)
@@ -221,8 +220,16 @@ var DEFAULT_KEX = [
   // https://tools.ietf.org/html/rfc4419#section-4
   'diffie-hellman-group-exchange-sha256',
 
-  'diffie-hellman-group14-sha1' // REQUIRED
+  'diffie-hellman-group14-sha256',
+  'diffie-hellman-group16-sha512',
+  'diffie-hellman-group18-sha512',
+
+  'diffie-hellman-group14-sha1', // REQUIRED
 ];
+if (curve25519Supported) {
+  DEFAULT_KEX.unshift('curve25519-sha256');
+  DEFAULT_KEX.unshift('curve25519-sha256@libssh.org');
+}
 var SUPPORTED_KEX = [
   // https://tools.ietf.org/html/rfc4419#section-4
   'diffie-hellman-group-exchange-sha1',
@@ -233,10 +240,10 @@ var KEX_BUF = Buffer.from(DEFAULT_KEX.join(','), 'ascii');
 SUPPORTED_KEX = DEFAULT_KEX.concat(SUPPORTED_KEX);
 
 var DEFAULT_SERVER_HOST_KEY = [
-  'ssh-rsa',
   'ecdsa-sha2-nistp256',
   'ecdsa-sha2-nistp384',
-  'ecdsa-sha2-nistp521'
+  'ecdsa-sha2-nistp521',
+  'ssh-rsa',
 ];
 if (eddsaSupported)
   DEFAULT_SERVER_HOST_KEY.unshift('ssh-ed25519');
@@ -463,3 +470,4 @@ exports.BUGGY_IMPLS = [
 ];
 
 exports.EDDSA_SUPPORTED = eddsaSupported;
+exports.CURVE25519_SUPPORTED = curve25519Supported;

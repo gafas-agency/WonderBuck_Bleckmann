@@ -2,7 +2,7 @@ declare namespace snakecaseKeys {
   interface Options {
     /**
 		Recurse nested objects and objects in arrays.
-		@default false
+		@default true
 		*/
     readonly deep?: boolean;
 
@@ -18,13 +18,14 @@ declare namespace snakecaseKeys {
 Convert object keys to snake using [`to-snake-case`](https://github.com/ianstormtaylor/to-snake-case).
 @param input - Object or array of objects to snake-case.
 */
-declare function snakecaseKeys(
-  input: ReadonlyArray<{ [key: string]: unknown }>,
-  options?: snakecaseKeys.Options,
-): Array<{ [key: string]: unknown }>;
-declare function snakecaseKeys(
-  input: { [key: string]: unknown },
-  options?: snakecaseKeys.Options,
-): { [key: string]: unknown };
+declare function snakecaseKeys<
+  ReturnValue extends Array<{ [key: string]: any }>,
+  Input extends Array<{ [key: string]: any }> = Array<{ [key: string]: any }>
+>(input: Input, options?: snakecaseKeys.Options): ReturnValue;
+
+declare function snakecaseKeys<
+  ReturnValue extends { [key: string]: any },
+  Input extends { [key: string]: any } = { [key: string]: any }
+>(input: Input, options?: snakecaseKeys.Options): ReturnValue;
 
 export = snakecaseKeys;
