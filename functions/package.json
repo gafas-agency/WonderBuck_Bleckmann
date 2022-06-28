@@ -2,7 +2,8 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "serve": "firebase emulators:start --only functions",
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -11,13 +12,25 @@
   "engines": {
     "node": "14"
   },
-  "main": "index.js",
   "dependencies": {
-    "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.18.0"
+    "@hapi/hoek": "^7.1.0",
+    "@hapi/joi": "^15.0.3",
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.0.0",
+    "firebase-tools": "^7.0.1",
+    "node-gyp": "^4.0.0",
+    "nodemailer": "^6.2.1",
+    "rebuild": "^0.1.2",
+    "sftp-promises": "^1.7.0",
+    "ssh2-sftp-client": "^2.5.0",
+    "woocommerce-api": "^1.4.2",
+    "xml2json": "^0.11.2",
+    "xmlbuilder": "^13.0.2"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.2.0"
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.1.6"
   },
   "private": true
 }
