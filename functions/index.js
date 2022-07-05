@@ -1,6 +1,7 @@
 var parser = require('xml2json');
 var builder = require('xmlbuilder');
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 var WooCommerceAPI = require('woocommerce-api');
@@ -11,6 +12,11 @@ var SFTPClient = require('sftp-promises');
 const credentials = require('./credentials.json');
 
 var bleckmannDir = "LIVE"; //change to LIVE or TEST
+
+var runtimeOpts = {
+    vpcConnector: "connector-wonderbuckle",
+    vpcConnectorEgressSettings: "ALL_TRAFFIC"
+}
 
 var sftpConfig = {
     host: credentials.sftpBleckmann.host,
@@ -341,7 +347,7 @@ const ListOutFolder = () => {
     return("done");
 }
 
-exports.order = functions.https.onRequest(app);
+exports.order = functions.runWith(runtimeOpts).https.onRequest(app);
 
 exports.scheduledFunction = functions.pubsub.schedule('every 30 minutes').onRun((context) => {
     return ListOutFolder();
