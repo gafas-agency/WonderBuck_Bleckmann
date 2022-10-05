@@ -20,6 +20,7 @@
     "firebase-tools": "^7.0.1",
     "node-gyp": "^4.0.0",
     "nodemailer": "^6.2.1",
+    "public-ip": "^6.0.1",
     "rebuild": "^0.1.2",
     "sftp-promises": "^1.7.0",
     "ssh2-sftp-client": "^2.5.0",

@@ -6,7 +6,7 @@ const express = require('express');
 const cors = require('cors');
 var WooCommerceAPI = require('woocommerce-api');
 var nodemailer = require('nodemailer');
-
+const http = require('http');
 var SFTPClient = require('sftp-promises');
 
 const credentials = require('./credentials.json');
@@ -46,7 +46,7 @@ var transporter = nodemailer.createTransport({
   
 var mailOptions = {
     from: credentials.backupMail.user,
-    to: 'robin@gafas.be',
+    to: 'jordy.leysen@upthrust.eu',
     subject: 'Connection with Bleckmann failed',
     text: ''
 };
@@ -327,6 +327,11 @@ app.use(cors({ origin: true }));
 //app.get('/:id', (req, res) => res.send(Widgets.getById(req.params.id)));
 app.post('/', (req, res) => {
     console.log(req.body);
+    http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
+        resp.on('data', function(ip) {
+          console.log("My public IP address is: " + ip);
+        });
+      });
     if(req.body.status === "processing"){
         putOrdersIn(req.body);
     }
@@ -350,5 +355,11 @@ const ListOutFolder = () => {
 exports.order = functions.runWith(runtimeOpts).https.onRequest(app);
 
 exports.scheduledFunction = functions.pubsub.schedule('every 30 minutes').onRun((context) => {
+    console.log('context', context)
+    http.get({'host': 'api.ipify.org', 'port': 80, 'path': '/'}, function(resp) {
+        resp.on('data', function(ip) {
+          console.log("My public IP address is: " + ip);
+        });
+      });
     return ListOutFolder();
 });
